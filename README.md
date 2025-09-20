@@ -1,1 +1,1 @@
-MERN Stack, Render, Sentry, Stream, Clerk, Inngest
+MERN Stack, Render, Sentry, Stream, Clerk, Inngest, Vercel
