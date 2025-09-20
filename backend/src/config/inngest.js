@@ -29,7 +29,7 @@ const deleteUserFromDB = inngest.createFunction(
   async ({ event }) => {
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
-    // TPOD: handle errors and edge cases
+    // TODO: handle errors and edge cases
   }
 );
 // Create an empty array where we'll export future Inngest functions
