@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 import { connectDB } from "./db.js";
+import { User } from "../models/User.model.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "convo-app" });
 const syncUser = inngest.createFunction(
@@ -27,9 +28,10 @@ const deleteUserFromDB = inngest.createFunction(
   { id: "delete-user", name: "Delete User" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
+    await connectDB();
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
-    // TPOD: handle errors and edge cases
+    // TODO: handle errors and edge cases
   }
 );
 // Create an empty array where we'll export future Inngest functions
