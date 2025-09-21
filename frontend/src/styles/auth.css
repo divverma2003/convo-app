@@ -63,10 +63,12 @@
 }
 
 .brand-logo {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.2rem;
   border-radius: 0.75rem;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: rgb(209, 184, 174);
 }
 
 .brand-name {
@@ -205,8 +207,8 @@
 
 .auth-image-container {
   position: relative;
-  max-width: 480px;
-  max-height: 600px;
+  max-width: 720px;
+  max-height: 900px;
   width: 100%;
   border-radius: 2rem;
   overflow: hidden;

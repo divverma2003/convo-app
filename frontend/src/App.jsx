@@ -15,7 +15,6 @@ const App = () => {
         <Routes>
           <Route path="/auth" element={<AuthPage />} />
           <Route path="*" element={<Navigate to={"/auth"} replace />} />
-          <SignInButton mode="modal" />
         </Routes>
       </SignedOut>
       <SignedIn>

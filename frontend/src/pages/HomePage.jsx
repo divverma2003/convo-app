@@ -5,6 +5,7 @@ const HomePage = () => {
   return (
     <div>
       <UserButton />
+      Home Page
     </div>
   );
 };
