@@ -1,6 +1,7 @@
 import { Inngest } from "inngest";
 import { connectDB } from "./db.js";
 import { User } from "../models/user.model.js"; // Import the User model
+import { upsertStreamUser, deleteStreamUser } from "./stream.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "convo-app" });
 const syncUser = inngest.createFunction(
@@ -11,16 +12,21 @@ const syncUser = inngest.createFunction(
 
     const { id, email_addresses, first_name, last_name, image_url } =
       event.data; // available data from clerk user.created event
-    const newUser = new User({
+    const newUser = {
+      clerkId: id,
       email: email_addresses[0]?.email_address,
       name: `${first_name || ""} ${last_name || ""}`,
       image: image_url,
-      clerkId: id,
+    };
+
+    await User.create(newUser);
+
+    // Also create user in Stream (for chat functionalities)
+    await upsertStreamUser({
+      id: newUser.clerkId.toString(),
+      name: newUser.name,
+      image: newUser.image,
     });
-
-    await newUser.save();
-
-    // TODO: handle errors and edge cases
   }
 );
 
@@ -31,7 +37,7 @@ const deleteUserFromDB = inngest.createFunction(
     await connectDB();
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
-    // TODO: handle errors and edge cases
+    await deleteStreamUser(id.toString());
   }
 );
 // Create an empty array where we'll export future Inngest functions
