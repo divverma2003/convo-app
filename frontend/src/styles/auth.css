@@ -33,13 +33,13 @@
 }
 
 .auth-right {
-  flex: 0.8;
+  flex: 1;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding-right: 3rem;
 }
 
 .auth-hero {
@@ -207,8 +207,8 @@
 
 .auth-image-container {
   position: relative;
-  max-width: 720px;
-  max-height: 900px;
+  max-width: 600px;
+  max-height: 750px;
   width: 100%;
   border-radius: 2rem;
   overflow: hidden;
