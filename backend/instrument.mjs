@@ -8,8 +8,8 @@ if (!ENV.SENTRY_DSN) {
 } else {
   Sentry.init({
     dsn: ENV.SENTRY_DSN,
-    tracesSampleRate: 1.0,
-    profilesSampleRate: 1.0,
+    tracesSampleRate: ENV.NODE_ENV === "production" ? 0.1 : 1.0,
+    profilesSampleRate: ENV.NODE_ENV === "production" ? 0.05 : 1.0,
     environment: ENV.NODE_ENV || "development",
     includeLocalVariables: true,
 
