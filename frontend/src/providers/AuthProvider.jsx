@@ -18,7 +18,10 @@ export default function AuthProvider({ children }) {
         try {
           const token = await getToken();
           // send token in Authorization header to backend
-          if (token) config.headers.Authorization = `Bearer ${token}`;
+          if (token) {
+            config.headers = config.headers ?? {};
+            config.headers.Authorization = `Bearer ${token}`;
+          }
         } catch (error) {
           if (
             error.message?.includes("auth") ||
