@@ -23,7 +23,7 @@ export const useStreamChat = () => {
     isLoading: tokenLoading,
     error: tokenError,
   } = useQuery({
-    queryKey: ["streamToken"],
+    queryKey: ["streamToken", user?.id], // refetch if user changes (login/logout)
     queryFn: getStreamToken, // Fetch the token from your backend (function defined above)
     enabled: !!user?.id, // Only run this query if the user is available -- logged out user have no token
   });
@@ -35,6 +35,7 @@ export const useStreamChat = () => {
       if (!user?.id || !tokenData) return;
       try {
         const client = StreamChat.getInstance(STREAM_API_KEY);
+        let cancelled = false; // prevent setting state if component unmounts
         // connect the user to the chat client (for this project, user id is the clerk user id)
         await client.connectUser({
           id: user.id,
@@ -42,7 +43,7 @@ export const useStreamChat = () => {
           image: user.imageUrl,
         });
         // set the chat client in state
-        setChatClient(client);
+        if (!cancelled) setChatClient(client);
       } catch (error) {
         console.error("Error initializing Stream chat client:", error, {
           tags: { component: "useStreamChat" },
@@ -59,6 +60,7 @@ export const useStreamChat = () => {
     initializeChat();
     // cleanup
     return () => {
+      cancelled = true;
       if (chatClient) chatClient.disconnectUser();
     };
   }, [user, tokenData]);
