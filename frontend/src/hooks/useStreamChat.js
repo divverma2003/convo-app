@@ -30,22 +30,34 @@ export const useStreamChat = () => {
 
   // initialize stream chat client when we have a user and a token
   useEffect(() => {
+    // check if we have user and token
+
+    if (!tokenData?.token || !user?.id || !STREAM_API_KEY) return;
+
+    const client = StreamChat.getInstance(STREAM_API_KEY);
+    let cancelled = false; // prevent setting state if component unmounts
+
     const initializeChat = async () => {
-      // check if we have user and token
-      if (!user?.id || !tokenData) return;
       try {
-        const client = StreamChat.getInstance(STREAM_API_KEY);
-        let cancelled = false; // prevent setting state if component unmounts
         // connect the user to the chat client (for this project, user id is the clerk user id)
-        await client.connectUser({
-          id: user.id,
-          name: user.fullName,
-          image: user.imageUrl,
-        });
+        await client.connectUser(
+          {
+            id: user.id,
+            name:
+              user.fullName ??
+              user.username ??
+              user.primaryEmailAddress?.emailAddress ??
+              user.id,
+            image: user.imageUrl ?? undefined,
+          },
+          tokenData.token
+        );
         // set the chat client in state
         if (!cancelled) setChatClient(client);
       } catch (error) {
-        console.error("Error initializing Stream chat client:", error, {
+        console.error("Error initializing Stream chat client:", error);
+
+        Sentry.captureException(error, {
           tags: { component: "useStreamChat" },
           extra: {
             context: "stream_chat_connection",
@@ -53,8 +65,6 @@ export const useStreamChat = () => {
             streamApiKey: STREAM_API_KEY ? "present" : "missing",
           },
         });
-
-        Sentry.captureException(error);
       }
     };
     initializeChat();
@@ -63,7 +73,7 @@ export const useStreamChat = () => {
       cancelled = true;
       if (chatClient) chatClient.disconnectUser();
     };
-  }, [user, tokenData]);
+  }, [user?.id, tokenData?.token]);
 
   return { chatClient, isLoading: tokenLoading, error: tokenError };
 };
