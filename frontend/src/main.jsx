@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import React, { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { ClerkProvider } from "@clerk/clerk-react";
 import {
@@ -15,9 +15,9 @@ import { Toaster } from "react-hot-toast";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import * as Sentry from "@sentry/react";
 
+// We're using tanstack query to manage server state and caching (instead of useEffect and useState)
 const queryClient = new QueryClient();
 
-// We're using tanstack query to manage server state and caching (instead of useEffect and useState)
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -29,7 +29,7 @@ Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN,
   integrations: [
     Sentry.reactRouterV7BrowserTracingIntegration({
-      useEffect: React.useEffect,
+      useEffect,
       useLocation,
       useNavigationType,
       createRoutesFromChildren,
