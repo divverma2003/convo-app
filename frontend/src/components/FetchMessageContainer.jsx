@@ -6,8 +6,6 @@ const FetchMessageContainer = ({
   message = "Loading...",
   isLoading,
   showSpinner = isLoading ? true : false,
-  className = "",
-  children,
 }) => {
   const [dots, setDots] = useState("");
 
@@ -28,22 +26,20 @@ const FetchMessageContainer = ({
     }
   }, [isLoading]);
 
-  if (!isLoading && !children) return null;
+  if (!isLoading) return null;
 
   return (
-    <div className={`fetch-message-container ${className}`}>
-      {isLoading ? (
+    <div className={`fetch-message-container`}>
+      {isLoading && (
         <div className="fetch-content">
-          {showSpinner && (
-            <LoaderIcon className="text-white animate-spin size-6 text-primary" />
-          )}
           <p className="fetch-message">
             {message}
             {dots}
           </p>
+          {showSpinner && (
+            <LoaderIcon className="text-amber-900 animate-spin size-10 text-primary" />
+          )}
         </div>
-      ) : (
-        children
       )}
     </div>
   );

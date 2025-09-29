@@ -89,18 +89,19 @@ const HomePage = () => {
                         </div>
                       </div>
 
-                      {loading && (
+                      {true ? (
                         <FetchMessageContainer
-                          isLoading={loading}
-                          message={"Loading channels..."}
+                          isLoading={true}
+                          message={"Loading Channels"}
                         />
+                      ) : (
+                        <div className="channels-list">{children}</div>
                       )}
                       {error && (
                         <ErrorMessageContainer
                           message={"Error loading channels."}
                         />
                       )}
-                      <div className="channels-list">{children}</div>
 
                       <div className="section-header direct-messages">
                         <div className="section-title">

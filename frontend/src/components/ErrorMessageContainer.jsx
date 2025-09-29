@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { LoaderIcon } from "lucide-react";
 import "../styles/message-container.css";
 
-const ErrorMessageContainer = ({ message, className = "" }) => {
+const ErrorMessageContainer = ({ message }) => {
   return (
-    <div className={`fetch-message-container ${className}`}>
+    <div className={`fetch-message-container`}>
       <p className="fetch-message">{message}</p>
     </div>
   );
