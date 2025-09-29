@@ -8,7 +8,7 @@ const NotFoundPage = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-left">
+      <div className="auth-center">
         <div className="auth-hero">
           <div className="brand-container">
             <img src="/logo.png" alt="Convo Logo" className="brand-logo" />
@@ -64,16 +64,6 @@ const NotFoundPage = () => {
               <span className="button-arrow">←</span>
             </button>
           </div>
-        </div>
-      </div>
-      <div className="auth-right">
-        <div className="auth-image-container">
-          <img
-            src="/auth-i.jpg"
-            alt="Lost in conversation"
-            className="auth-image"
-          />
-          <div className="image-overlay"></div>
         </div>
       </div>
     </div>

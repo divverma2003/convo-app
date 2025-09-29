@@ -32,6 +32,15 @@
   position: relative;
 }
 
+.auth-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+}
+
 .auth-right {
   flex: 1;
   position: relative;
@@ -43,7 +52,7 @@
 }
 
 .auth-hero {
-  max-width: 500px;
+  max-width: 80vw;
   color: #3d3427;
   z-index: 2;
   padding: 3rem;
@@ -77,7 +86,7 @@
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0.05em;
   text-transform: lowercase;
-  background: linear-gradient(45deg, #8b5c33, #654321);
+  background: linear-gradient(45deg, #8b5c33 0%, #654321 50%, #3d2314 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

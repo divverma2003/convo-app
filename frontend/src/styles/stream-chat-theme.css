@@ -1,10 +1,14 @@
-@import "stream-chat-react/dist/css/v2/index.css";
+/* Using BEM methodology for custom styles */
 
+@import "stream-chat-react/dist/css/v2/index.css";
+ 
 :root {
   --primary-color: #8b5c33;
   --primary-color-alpha: #654321;
   --secondary-color: #a0693d;
   --gray-wash: #faf8f5;
+  --pink-gray-wash: #f6ecf4bf;
+  --pink: #fac1ee,
   --white: #ffffff;
   --black: #3d3427;
   --primary-text: #3d3427;
@@ -21,13 +25,14 @@
 /* Chat Wrapper & Container */
 .chat-wrapper {
   min-height: 100vh;
+  /* Pink Shades */
   background: linear-gradient(
       125deg,
-      #faf8f5 0%,
-      #f5f2eb 25%,
-      #ede8dc 50%,
-      #e8e1d0 75%,
-      #e1d7c6 100%
+      #f6ecf4 0%,
+      #f6e2f2 25%,
+      #fac1ee 50%,
+      #f3a7e3 75%,
+      #f399e1 100%
     ),
     radial-gradient(
       ellipse at top left,
@@ -189,13 +194,14 @@
 }
 
 .create-channel-modal {
+  /* Pink Shades */
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(250, 248, 245, 0.95) 25%,
-    rgba(245, 242, 235, 0.95) 50%,
-    rgba(250, 248, 245, 0.95) 75%,
-    rgba(255, 255, 255, 0.95) 100%
+    #f6ecf4 0%,
+    #f6e2f2 25%,
+    #fac1ee 50%,
+    #f3a7e3 75%,
+    #f399e1 100%
   );
   backdrop-filter: blur(25px);
   border-radius: 1.5rem;
@@ -441,11 +447,11 @@
   z-index: 1;
   background: linear-gradient(
       180deg,
-      #faf8f5 0%,
-      #f5f2eb 25%,
-      #ede8dc 50%,
-      #f5f2eb 75%,
-      #faf8f5 100%
+      /* Pink Shades */ #f6ecf4 0%,
+      #f6e2f2 25%,
+      #fac1ee 50%,
+      #f3a7e3 75%,
+      #f399e1 100%
     ),
     linear-gradient(
       45deg,
@@ -566,8 +572,9 @@
 }
 
 .brand-logo {
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.2rem;
   border-radius: 0.75rem;
   box-shadow: 0 8px 25px rgba(101, 67, 33, 0.2),
     0 4px 15px rgba(139, 92, 51, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -585,7 +592,12 @@
   font-weight: 800;
   font-family: "Monaco", monospace;
   letter-spacing: 0.05em;
-  background: linear-gradient(135deg, #fff 0%, #e0e0e0 50%, #fff 100%);
+  /* Brown Shades */
+  background: linear-gradient(45deg,
+    #8b5c33 0%,
+    #654321 50%,
+    #3d2314 100%
+       );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

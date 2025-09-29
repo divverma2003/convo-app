@@ -6,12 +6,14 @@ import { useAuth } from "@clerk/clerk-react";
 import AuthPage from "./pages/AuthPage";
 import CallPage from "./pages/CallPage";
 import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import PageLoader from "./components/PageLoader";
 const App = () => {
   const { isSignedIn, isLoaded } = useAuth();
 
   // Wait for Clerk to load before rendering
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <PageLoader />;
   }
 
   return (
@@ -35,16 +37,7 @@ const App = () => {
           }
         />
 
-        <Route
-          path="*"
-          element={
-            isSignedIn ? (
-              <Navigate to={"/"} replace />
-            ) : (
-              <Navigate to={"/auth"} replace />
-            )
-          }
-        />
+        <Route path="*" element={<NotFoundPage />} />
       </SentryRoutes>
     </div>
   );

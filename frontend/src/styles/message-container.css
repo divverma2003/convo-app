@@ -1,0 +1,114 @@
+.fetch-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 200px;
+  background: rgba(250, 248, 245, 0.9);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(139, 92, 51, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(139, 92, 51, 0.1);
+}
+
+.fetch-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fetch-message {
+  color: #654321;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  min-width: 120px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Spinner Animation */
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-ring {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(139, 92, 51, 0.2);
+  border-top: 3px solid #8b5c33;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover effect for better interactivity */
+.fetch-message-container:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(139, 92, 51, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .fetch-message-container {
+    padding: 1.5rem;
+    min-height: 150px;
+  }
+
+  .fetch-message {
+    font-size: 1rem;
+  }
+
+  .spinner-ring {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Variants for different states */
+.fetch-message-container.compact {
+  padding: 1rem;
+  min-height: 100px;
+}
+
+.fetch-message-container.large {
+  padding: 3rem;
+  min-height: 300px;
+}
+
+.fetch-message-container.inline {
+  flex-direction: row;
+  min-height: auto;
+  padding: 0.75rem 1rem;
+  background: rgba(250, 248, 245, 0.7);
+}
+
+.fetch-message-container.inline .fetch-content {
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.fetch-message-container.inline .spinner-ring {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.fetch-message-container.inline .fetch-message {
+  font-size: 0.9rem;
+  min-width: auto;
+}
