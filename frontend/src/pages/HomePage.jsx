@@ -7,7 +7,7 @@ import ErrorMessageContainer from "../components/ErrorMessageContainer.jsx";
 import FetchMessageContainer from "../components/FetchMessageContainer.jsx";
 import CustomChannelHeader from "../components/CustomChannelHeader.jsx";
 import CustomChannelPreview from "../components/CustomChannelPreview.jsx";
-import CustomChannelModal from "../components/CustomChannelModal.jsx";
+import CreateChannelModal from "../components/CreateChannelModal.jsx";
 import UsersList from "../components/UsersList.jsx";
 import { HashIcon, PlusIcon, UsersIcon } from "lucide-react";
 
@@ -89,18 +89,17 @@ const HomePage = () => {
                         </div>
                       </div>
 
-                      {true ? (
+                      {loading ? (
                         <FetchMessageContainer
-                          isLoading={true}
+                          isLoading={loading}
                           message={"Loading Channels"}
+                        />
+                      ) : error ? (
+                        <ErrorMessageContainer
+                          message={"Error loading channels"}
                         />
                       ) : (
                         <div className="channels-list">{children}</div>
-                      )}
-                      {error && (
-                        <ErrorMessageContainer
-                          message={"Error loading channels."}
-                        />
                       )}
 
                       <div className="section-header direct-messages">
@@ -133,7 +132,7 @@ const HomePage = () => {
         </div>
 
         {isCreateModalOpen && (
-          <CustomChannelModal
+          <CreateChannelModal
             isOpen={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}
           />
