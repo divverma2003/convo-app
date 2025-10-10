@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { LoaderIcon } from "lucide-react";
 import "../styles/message-container.css";
 
-const FetchMessageContainer = ({
+const FetchContentContainer = ({
   message = "Loading...",
   isLoading,
   showSpinner = isLoading ? true : false,
@@ -37,7 +37,7 @@ const FetchMessageContainer = ({
             {dots}
           </p>
           {showSpinner && (
-            <LoaderIcon className="text-amber-900 animate-spin size-10 text-primary" />
+            <LoaderIcon className="text-yellow-900 animate-spin size-10 text-primary" />
           )}
         </div>
       )}
@@ -45,4 +45,4 @@ const FetchMessageContainer = ({
   );
 };
 
-export default FetchMessageContainer;
+export default FetchContentContainer;
