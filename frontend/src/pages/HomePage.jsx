@@ -4,7 +4,7 @@ import { useStreamChat } from "../hooks/useStreamChat.js";
 import { useSearchParams } from "react-router";
 
 import ErrorMessageContainer from "../components/ErrorMessageContainer.jsx";
-import FetchMessageContainer from "../components/FetchMessageContainer.jsx";
+import FetchContentContainer from "../components/FetchContentContainer.jsx";
 import CustomChannelHeader from "../components/CustomChannelHeader.jsx";
 import CustomChannelPreview from "../components/CustomChannelPreview.jsx";
 import CreateChannelModal from "../components/CreateChannelModal.jsx";
@@ -90,7 +90,7 @@ const HomePage = () => {
                       </div>
 
                       {loading ? (
-                        <FetchMessageContainer
+                        <FetchContentContainer
                           isLoading={loading}
                           message={"Loading Channels"}
                         />
@@ -132,10 +132,7 @@ const HomePage = () => {
         </div>
 
         {isCreateModalOpen && (
-          <CreateChannelModal
-            isOpen={isCreateModalOpen}
-            onClose={() => setIsCreateModalOpen(false)}
-          />
+          <CreateChannelModal onClose={() => setIsCreateModalOpen(false)} />
         )}
       </Chat>
     </div>
