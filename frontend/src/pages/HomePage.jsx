@@ -115,20 +115,20 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        {/*RIGHT CONTAINER */}
-        <div className="chat-main">
-          <Channel channel={activeChannel}>
-            <Window>
-              <CustomChannelHeader />
-              <MessageList />
-              <MessageInput />
-            </Window>
+          {/*RIGHT CONTAINER */}
+          <div className="chat-main">
+            <Channel channel={activeChannel}>
+              <Window>
+                <CustomChannelHeader />
+                <MessageList />
+                <MessageInput />
+              </Window>
 
-            {/* threaded messages */}
-            <Thread />
-          </Channel>
+              {/* threaded messages */}
+              <Thread />
+            </Channel>
+          </div>
         </div>
 
         {isCreateModalOpen && (
