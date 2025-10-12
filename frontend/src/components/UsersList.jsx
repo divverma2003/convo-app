@@ -10,6 +10,8 @@ import ErrorMessageContainer from "./ErrorMessageContainer.jsx";
 
 const UsersList = ({ activeChannel }) => {
   const { client } = useChatContext();
+
+  // we won't use the search params, but we need the setter to change the URL
   const [_, setSearchParams] = useSearchParams();
 
   const fetchUsers = useCallback(async () => {
@@ -18,7 +20,7 @@ const UsersList = ({ activeChannel }) => {
     const response = await client.queryUsers(
       { id: { $ne: client.user.id } },
       { name: 1 },
-      { limit: 20 }
+      { limit: 25 }
     );
 
     const usersOnly = response.users.filter(
@@ -34,6 +36,8 @@ const UsersList = ({ activeChannel }) => {
   } = useQuery({
     queryKey: ["users-list", client?.user?.id],
     queryFn: fetchUsers,
+    // convert client to boolean to avoid issues with object reference
+    // only run the query if there's a user
     enabled: !!client?.user,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

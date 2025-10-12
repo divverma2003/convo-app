@@ -40,7 +40,6 @@ const HomePage = () => {
     }
   }, [chatClient, searchParams]);
 
-  // todo: handle this with a better component
   if (error) return <ErrorMessageContainer message="Something went wrong!" />;
   if (isLoading || !chatClient) return <PageLoader />;
   return (
@@ -76,10 +75,22 @@ const HomePage = () => {
                   </button>
                 </div>
                 {/*CHANNEL LIST */}
+                {/*List the channels the user is a part of + any public channels*/}
+                {/* Specify preview component for how each channel should look in the sidebar */}
                 <ChannelList
-                  filters={{ members: { $in: [chatClient?.user?.id] } }}
+                  filters={{
+                    members: { $in: [chatClient?.user?.id] },
+                  }}
                   options={{ state: true, watch: true }}
-                  Preview={({ channel }) => <CustomChannelPreview />}
+                  Preview={({ channel }) => (
+                    <CustomChannelPreview
+                      channel={channel}
+                      activeChannel={activeChannel}
+                      setActiveChannel={(channel) =>
+                        setSearchParams({ channel: channel.id })
+                      }
+                    />
+                  )}
                   List={({ children, loading, error }) => (
                     <div className="channel-sections">
                       <div className="section-header">
