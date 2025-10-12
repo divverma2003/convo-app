@@ -1,14 +1,15 @@
 /* Using BEM methodology for custom styles */
 
 @import "stream-chat-react/dist/css/v2/index.css";
- 
+
 :root {
   --primary-color: #8b5c33;
   --primary-color-alpha: #654321;
   --secondary-color: #a0693d;
   --gray-wash: #faf8f5;
   --pink-gray-wash: #f6ecf4bf;
-  --pink: #fac1ee,
+  --pink: #fac1ee;
+  --pink-dark: #c85ab07f;
   --white: #ffffff;
   --black: #3d3427;
   --primary-text: #3d3427;
@@ -198,7 +199,7 @@
   background: linear-gradient(
     135deg,
     #f6ecf4 0%,
-        #f6e2f2 25%,
+    #f6e2f2 25%,
 
     #fac1ee 50%,
     #f3a7e3 75%,
@@ -279,7 +280,7 @@
 
 .create-channel-modal__close {
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid  var(--primary-color, 0.015);
+  border: 1px solid var(--primary-color, 0.015);
   color: var(--secondary-color, 0.8);
   cursor: pointer;
   padding: 0.625rem;
@@ -364,7 +365,7 @@
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: var(--primary-color, 0.5)
+  color: var(--primary-color, 0.5);
 }
 
 .form-input:focus,
@@ -437,7 +438,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
 }
 
 /* Custom Sidebar Components */
@@ -593,11 +593,7 @@
   font-family: "Monaco", monospace;
   letter-spacing: 0.05em;
   /* Brown Shades */
-  background: linear-gradient(45deg,
-    #8b5c33 0%,
-    #654321 50%,
-    #3d2314 100%
-       );
+  background: linear-gradient(45deg, #8b5c33 0%, #654321 50%, #3d2314 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -882,7 +878,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-
 .btn {
   padding: 0.875rem 1.75rem;
   border-radius: 0.875rem;
@@ -925,6 +920,7 @@
     #4a2c17 70%,
     #3d2314 100%
   );
+  color: white;
   border-color: rgba(139, 92, 51, 0.4);
   box-shadow: 0 8px 25px rgba(101, 67, 33, 0.2),
     0 4px 15px rgba(139, 92, 51, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.3);
@@ -939,22 +935,29 @@
 }
 
 .btn-primary:disabled {
-  background: rgba(255, 255, 255, 0.05);
-  
+  background: linear-gradient(
+    135deg,
+    #8b5c33 0%,
+    #654321 30%,
+    #4a2c17 70%,
+    #3d2314 100%
+  );
+  color: white;
   cursor: not-allowed;
   transform: none;
+  opacity: 0.6;
   box-shadow: none;
   border-color: rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(200, 90, 176, 0.15);
   border-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(200, 90, 176, 0.25);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   border-color: rgba(255, 255, 255, 0.3);
@@ -1041,7 +1044,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-    width: 32px;
+  width: 32px;
   height: 32px;
   border-radius: 50%;
   color: #faf8f5;

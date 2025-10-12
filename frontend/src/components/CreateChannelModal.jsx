@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "react-router";
 import { useChatContext } from "stream-chat-react";
 import * as Sentry from "@sentry/react";
@@ -9,6 +9,7 @@ import {
   LockIcon,
   UsersIcon,
   XIcon,
+  SearchIcon,
 } from "lucide-react";
 
 const CreateChannelModal = ({ onClose }) => {
@@ -22,43 +23,87 @@ const CreateChannelModal = ({ onClose }) => {
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [_, setSearchParams] = useSearchParams();
 
+  const [hasMore, setHasMore] = useState(false);
+  const [page, setPage] = useState(0);
+
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+
   const { client, setActiveChannel } = useChatContext();
 
-  // fetch users to add to the channel
+  // debounce search input to avoid excessive calls
   useEffect(() => {
-    const fetchUsers = async () => {
+    // set a timeout to update the debounced search query
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    // cleanup function: clear the timeout if searchQuery changes before 500ms
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+  // fetch users to add to the channel
+  const fetchUsers = useCallback(
+    async (pageParam = 0, search = "") => {
       if (!client) return;
       setLoadingUsers(true);
 
       try {
+        const limit = 25;
+
+        const filters = {
+          id: { $ne: client.user.id },
+        };
+
+        if (search.trim()) {
+          // search by name or id using q
+          filters.$or = [
+            { name: { $autocomplete: search.trim() } },
+            { id: { $autocomplete: search.trim() } },
+          ];
+        }
+
         // filter out the current user and any bot users (like recording-*)
         // sort in alphabetical order by name
         // limit to 100 users for performance
         const response = await client.queryUsers(
-          { id: { $ne: client.user.id } },
+          filters,
           { name: 1 },
-          { limit: 100 }
+          { limit, offset: limit * pageParam }
         );
 
         const usersOnly = response.users.filter(
           (user) => !user.id.startsWith("recording-")
         );
 
-        setUsers(usersOnly, []);
+        // If it's the first page, replace users; otherwise append
+        if (pageParam === 0) {
+          setUsers(usersOnly);
+        } else {
+          setUsers((prevUsers) => [...prevUsers, ...usersOnly]);
+        }
+        setHasMore(usersOnly.length === limit);
+        setPage(pageParam + 1);
       } catch (error) {
         console.log("Error fetching users: ", error);
         Sentry.captureException(error, {
           tags: { component: "CreateChannelModal" },
           extra: { context: "fetch_users_for_channel" },
         });
-        setUsers([]);
+
+        if (pageParam === 0) {
+          setUsers([]);
+        }
       } finally {
         setLoadingUsers(false);
       }
-    };
+    },
+    [client]
+  );
 
-    fetchUsers();
-  }, [client]);
+  // initial fetch
+  useEffect(() => {
+    fetchUsers(0, debouncedSearchQuery);
+  }, [fetchUsers, debouncedSearchQuery]);
 
   // auto-select all users for public channels
   useEffect(() => {
@@ -90,6 +135,21 @@ const CreateChannelModal = ({ onClose }) => {
       setSelectedMembers([...selectedMembers, id]);
     }
   };
+
+  // Handle search input change (updates immediately for UI responsiveness)
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+    setPage(0); // Reset to first page on new search
+  };
+
+  const handleLoadMore = useCallback(async () => {
+    if (!hasMore) {
+      toast.warn("You've reached the end of the user list.");
+      return;
+    }
+    await fetchUsers(page, debouncedSearchQuery);
+  }, [hasMore, page, debouncedSearchQuery, fetchUsers]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -166,7 +226,10 @@ const CreateChannelModal = ({ onClose }) => {
         </div>
 
         {/* form */}
-        <form onSubmit={handleSubmit} className="create-channel-modal__form">
+        <form
+          onSubmit={() => handleSubmit()}
+          className="create-channel-modal__form"
+        >
           {error && (
             <div className="form-error">
               <AlertCircleIcon className="w-4 h-4" />
@@ -252,6 +315,17 @@ const CreateChannelModal = ({ onClose }) => {
           {channelType === "private" && (
             <div className="form-group">
               <label>Add Members</label>
+              {/* Search Bar */}
+              <div className="input-with-icon mb-3">
+                <SearchIcon className="w-4 h-4 input-icon" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search users by name..."
+                  className="form-input"
+                />
+              </div>
               <div className="member-selection-header">
                 <button
                   type="button"
@@ -270,10 +344,14 @@ const CreateChannelModal = ({ onClose }) => {
               </div>
 
               <div className="members-list">
-                {loadingUsers ? (
+                {loadingUsers && page == 0 ? (
                   <p>Loading users...</p>
                 ) : users.length === 0 ? (
-                  <p>No users found</p>
+                  <p>
+                    {debouncedSearchQuery
+                      ? "No users found matching your search"
+                      : "No users found"}
+                  </p>
                 ) : (
                   users.map((user) => (
                     <label key={user.id} className="member-item">
@@ -293,7 +371,8 @@ const CreateChannelModal = ({ onClose }) => {
                         <div className="member-avatar-placeholder">
                           {/* Placeholder avatar with initials */}
                           <span>
-                            {(user.name || user.id).charAt(0).toUpperCase()}
+                            {(user.name || user.id).charAt(0).toUpperCase() ||
+                              ""}
                           </span>
                         </div>
                       )}
@@ -303,6 +382,15 @@ const CreateChannelModal = ({ onClose }) => {
                     </label>
                   ))
                 )}
+                {/* Load More Button */}
+                <button
+                  type="button"
+                  onClick={handleLoadMore}
+                  disabled={loadingUsers || !hasMore}
+                  className="btn btn-secondary w-full mt-2"
+                >
+                  {loadingUsers ? "Loading more..." : "Load More Users"}
+                </button>
               </div>
             </div>
           )}
@@ -332,7 +420,7 @@ const CreateChannelModal = ({ onClose }) => {
             <button
               type="submit"
               disabled={!channelName.trim() || isCreating}
-              className="btn btn-primary"
+              className="btn-primary btn"
             >
               {isCreating ? "Creating..." : "Create Channel"}
             </button>
