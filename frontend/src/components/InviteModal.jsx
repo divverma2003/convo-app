@@ -27,7 +27,7 @@ const InviteModal = ({ channel, onClose }) => {
       if (!client) return;
 
       try {
-        const limit = 10;
+        const limit = 15;
 
         const members = Object.keys(channel.state.members);
 

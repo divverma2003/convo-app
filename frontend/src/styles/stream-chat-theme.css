@@ -196,14 +196,7 @@
 
 .create-channel-modal {
   /* Pink Shades */
-  background: linear-gradient(
-    135deg,
-    #f6ecf4 0%,
-    #f6e2f2 25%,
-    #fac1ee 50%,
-    #f3a7e3 75%,
-    #f790e2 100%
-  );
+  background: linear-gradient(135deg, #f6e2f2 25%, #fac1ee 50%, #f3a7e3 75%);
   backdrop-filter: blur(25px);
   border-radius: 1.5rem;
   width: 560px;
@@ -441,26 +434,21 @@
 
 /* Custom Sidebar Components */
 .team-channel-list {
-  height: 100%;
+  height: 100vh;
   position: relative;
   z-index: 1;
   background: linear-gradient(
-      180deg,
-      /* Pink Shades */ #f6ecf4 0%,
-      #f6e2f2 25%,
-      #fac1ee 50%,
-      #f3a7e3 75%,
-      #f399e1 100%
-    ),
-    linear-gradient(
-      45deg,
-      rgba(139, 92, 51, 0.2) 0%,
-      rgba(101, 67, 33, 0.3) 30%,
-      rgba(160, 108, 69, 0.25) 60%,
-      rgba(121, 85, 61, 0.2) 100%
-    );
+    180deg,
+    /* Pink Shades */ #f6ecf4 0%,
+    #f6e2f2 25%,
+    #fac1ee 50%,
+    #f3a7e3 75%,
+    #f399e1 100%
+  );
   display: flex;
   flex-direction: column;
+  border: 1rem;
+  overflow: hidden;
 }
 
 .team-channel-list::before {
@@ -533,7 +521,7 @@
   flex: 1;
   position: relative;
   z-index: 1;
-  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 .team-channel-list__content::-webkit-scrollbar {
@@ -995,12 +983,12 @@
 
 .members-list {
   max-height: 200px;
-  overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 0.875rem;
   padding: 0.75rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  overflow-y: auto;
 }
 
 .members-list::-webkit-scrollbar {

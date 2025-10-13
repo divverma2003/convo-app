@@ -18,7 +18,7 @@ const UsersList = ({ activeChannel }) => {
     async (pageParam = 0) => {
       if (!client?.user) return { users: [], hasMore: false };
 
-      const limit = 10;
+      const limit = 15;
       const response = await client.queryUsers(
         { id: { $ne: client.user.id } },
         { name: 1 },

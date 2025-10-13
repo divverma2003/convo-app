@@ -148,6 +148,7 @@ const HomePage = () => {
           </div>
         </div>
 
+        {/*No need to reset the modal state, it renders conditionally based on isCreateModalOpen */}
         {isCreateModalOpen && (
           <CreateChannelModal onClose={() => setIsCreateModalOpen(false)} />
         )}

@@ -19,21 +19,23 @@ import {
 } from "@stream-io/video-react-sdk";
 
 import "@stream-io/video-react-sdk/dist/css/styles.css";
-import FetchContentContainer from "../components/FetchContentContainer";
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
 
 const CallPage = () => {
+  // get callId from the URL (from APP router)
   const { id: callId } = useParams();
   const { user, isLoaded } = useUser();
 
   const [client, setClient] = useState(null);
   const [call, setCall] = useState(null);
   const [isConnecting, setIsConnecting] = useState(true);
-
+  const [callError, setCallError] = useState(null);
+  // fetch stream token for the current user
+  // from the backend
   const { data: tokenData } = useQuery({
     queryKey: ["streamToken"],
     queryFn: getStreamToken,
-    enabled: !!user,
+    enabled: !!user, // convert to boolean
   });
 
   useEffect(() => {
@@ -52,12 +54,14 @@ const CallPage = () => {
         });
 
         const callInstance = videoClient.call("default", callId);
+        // upsert call
         await callInstance.join({ create: true });
 
         setClient(videoClient);
         setCall(callInstance);
       } catch (error) {
         console.log("Error initializing call:", error);
+        setCallError(error);
         toast.error("Error starting call, please try again.");
       } finally {
         setIsConnecting(false);
@@ -69,8 +73,15 @@ const CallPage = () => {
   if (isConnecting || !isLoaded) {
     return <PageLoader message="Connecting to call..." />;
   }
+
+  if (callError) {
+    return (
+      <ErrorMessageContainer message="Error initializing call, please try again later." />
+    );
+  }
+
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="auth-container">
       <div className="relative w-full max-w-4xl mx-auto">
         {client && call ? (
           <StreamVideo client={client}>
@@ -92,6 +103,7 @@ const CallContent = () => {
   const callingState = useCallCallingState();
   const navigate = useNavigate();
 
+  // if call has ended or user has left, navigate back to home page
   if (callingState === CallingState.LEFT) return navigate("/");
 
   return (

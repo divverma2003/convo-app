@@ -48,7 +48,7 @@ const CreateChannelModal = ({ onClose }) => {
       setLoadingUsers(true);
 
       try {
-        const limit = 25;
+        const limit = 15;
 
         const filters = {
           id: { $ne: client.user.id },
