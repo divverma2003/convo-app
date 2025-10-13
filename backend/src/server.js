@@ -5,22 +5,16 @@ import { connectDB } from "./config/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
 import * as Sentry from "@sentry/node";
-import cors from "cors";
+
 import { inngest, functions } from "./config/inngest.js";
 import chatRoutes from "./routes/chat.route.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ENV.CLIENT_URL || `http://localhost:5173`,
-    credentials: true, // Allow cookies and authentication headers (from Clerk)
-  })
-); // Enable CORS for requests from the frontend
-app.use(express.json()); // for parsing application/json --> req.body
-app.use(clerkMiddleware()); // req.auth will be available in the request object
+app.use(express.json()); // for parsing application/json -->CLIENT_URLapp.use(clerkMiddleware()); // req.auth will be available in the request object
 
 // Route handlers
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 
