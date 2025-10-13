@@ -691,9 +691,9 @@
 }
 
 .section-header.direct-messages {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .section-title {
