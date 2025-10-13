@@ -29,7 +29,8 @@ const CustomChannelHeader = () => {
   );
 
   const isDM =
-    channel.data?.member_count === 2 && channel.data?.id.includes("user_");
+    (channel.data?.member_count === 2 && channel.data?.id.includes("user_")) ||
+    channel.data?.isDM === true;
 
   const handleShowPinned = async () => {
     const channelState = await channel.query();

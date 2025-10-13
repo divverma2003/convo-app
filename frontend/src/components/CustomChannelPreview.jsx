@@ -9,7 +9,8 @@ const CustomChannelPreview = ({ channel, setActiveChannel, activeChannel }) => {
   // only channels with more than 2 members or non-DM channels will be shown
   // this is determined by checking the member count and the channel id pattern
   const isDM =
-    channel.data.member_count === 2 && channel.data.id.includes("user_");
+    (channel.data.member_count === 2 && channel.data.id.includes("user_")) ||
+    channel.data.isDM === true;
 
   if (isDM) return null;
 

@@ -90,6 +90,8 @@ const UsersList = ({ activeChannel }) => {
         .slice(0, 64);
       const channel = client.channel("messaging", channelId, {
         members: [client.user.id, targetUser.id],
+        isDM: true, // Custom attribute to identify direct messages
+        member_count: 2, // Explicitly set member count for DMs
       });
       await channel.watch();
       setSearchParams({ channel: channelId });
