@@ -39,8 +39,12 @@ const CallPage = () => {
   });
 
   useEffect(() => {
+    let isMounted = true;
+    let videoClientRef;
+    let callRef;
+
     const initCall = async () => {
-      if (!tokenData.token || !user || !callId) return;
+      if (!tokenData?.token || !user || !callId) return;
 
       try {
         const videoClient = new StreamVideoClient({
@@ -54,9 +58,13 @@ const CallPage = () => {
         });
 
         const callInstance = videoClient.call("default", callId);
+        callRef = callInstance;
+        videoClientRef = videoClient;
+
         // upsert call
         await callInstance.join({ create: true });
 
+        if (!isMounted) return;
         setClient(videoClient);
         setCall(callInstance);
       } catch (error) {
@@ -64,10 +72,38 @@ const CallPage = () => {
         setCallError(error);
         toast.error("Error starting call, please try again.");
       } finally {
-        setIsConnecting(false);
+        if (isMounted) setIsConnecting(false);
       }
     };
     initCall();
+
+    return () => {
+      isMounted = false;
+
+      // Clean up call connection
+      const cleanup = async () => {
+        try {
+          // Only leave if the call is still active
+          if (callRef && callRef.state.callingState !== CallingState.LEFT) {
+            await callRef.leave();
+          }
+        } catch (error) {
+          // Silently catch "already left" errors
+          if (!error.message?.includes("already been left")) {
+            console.error("Error leaving call:", error);
+          }
+        }
+
+        try {
+          // Disconnect and dispose the video client
+          await videoClientRef?.disconnectUser();
+        } catch (error) {
+          console.error("Error disconnecting client:", error);
+        }
+      };
+
+      cleanup();
+    };
   }, [tokenData, user, callId]);
 
   if (isConnecting || !isLoaded) {
@@ -108,8 +144,11 @@ const CallContent = () => {
   const navigate = useNavigate();
 
   // if call has ended or user has left, navigate back to home page
-  if (callingState === CallingState.LEFT) return navigate("/");
-
+  useEffect(() => {
+    if (callingState === CallingState.LEFT) {
+      navigate("/");
+    }
+  }, [callingState, navigate]);
   return (
     <StreamTheme>
       <SpeakerLayout />
