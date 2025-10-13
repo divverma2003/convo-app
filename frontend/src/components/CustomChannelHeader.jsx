@@ -59,8 +59,18 @@ const CustomChannelHeader = () => {
             <img
               src={otherUser.user.image}
               alt={otherUser.user.name || otherUser.user.id}
-              className="size-7 rounded-full object-cover mr-1"
+              className="member-avatar"
             />
+          )}
+
+          {isDM && !otherUser?.user?.image && (
+            <div className="size-7 rounded-full bg-gray-400 flex items-center justify-center mr-1">
+              <span className="text-white">
+                {(otherUser?.user?.name || otherUser?.user?.id)
+                  .charAt(0)
+                  .toUpperCase() || "?"}
+              </span>
+            </div>
           )}
 
           <span className="font-medium text-[#1D1C1D]">

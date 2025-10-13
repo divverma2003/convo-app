@@ -29,17 +29,17 @@ const MembersModal = ({ members, onClose }) => {
                   className="size-9 rounded-full object-cover"
                 />
               ) : (
-                <div className="size-9 rounded-full bg-gray-400 flex items-center justify-center">
-                  <span className="text-white">
+                <div className="member-avatar-placeholder">
+                  <span>
                     {(member.user.name || member.user.id)
                       .charAt(0)
-                      .toUpperCase()}
+                      .toUpperCase() || "?"}
                   </span>
                 </div>
               )}
 
               <div className="text-sm font-medium text-gray-700 mb-1">
-                {member.user.name || member.user.id}
+                {member.user.name || member.user.id || "Unknown User"}
               </div>
             </div>
           ))}
