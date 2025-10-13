@@ -2,6 +2,8 @@
 
 A modern, full-stack real-time chat application built with the MERN stack, featuring instant messaging, user authentication, and cloud deployment.
 
+Link to site: https://convo-app-frontend-kappa.vercel.app
+
 ## Features
 
 - **Real-time Messaging**: Instant chat powered by Stream Chat API
