@@ -8,7 +8,7 @@ const AuthPage = () => {
         <div className="auth-hero">
           <div className="brand-container">
             <img src="/logo.png" alt="Convo Logo" className="brand-logo" />
-            <span className="brand-name">Convo</span>
+            <span className="brand-name-auth">Convo</span>
           </div>
 
           <h1 className="hero-title">Conversation, perfected</h1>

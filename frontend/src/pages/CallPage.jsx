@@ -82,11 +82,11 @@ const CallPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-yellow-900">
-      <div className="brand-container">
-        <img src="/logo.png" alt="Convo Logo" className="brand-logo" />
-        <span className="brand-name">Convo</span>
+      <div className="absolute top-8 left-8 flex flex-col items-center gap-2">
+        <img src="/logo.png" alt="Convo Logo" className="brand-logo-call" />
+        <span className="brand-name-call text-2xl">Convo</span>
       </div>
-      <div className="relative w-full max-w-4xl mx-auto">
+      <div className="relative w-full max-w-4xl mx-auto mt-2">
         {client && call ? (
           <StreamVideo client={client}>
             <StreamCall call={call}>
