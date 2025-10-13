@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useChatContext } from "stream-chat-react";
 import { XIcon, SearchIcon } from "lucide-react";
 import FetchContentContainer from "./FetchContentContainer";
+import toast from "react-hot-toast";
 
 const InviteModal = ({ channel, onClose }) => {
   const { client } = useChatContext();
@@ -110,10 +111,27 @@ const InviteModal = ({ channel, onClose }) => {
     setError("");
     try {
       await channel.addMembers(selectedMembers);
+      toast.success(`Invited ${selectedMembers.length} user(s) successfully!`);
       onClose();
     } catch (error) {
-      setError("Error inviting users, please try again.");
       console.log("Error inviting users:", error);
+
+      // Check if it's a permissions error
+      if (
+        error.message?.includes(
+          "not allowed to perform action UpdateChannelMembers"
+        )
+      ) {
+        setError(
+          "You don't have permission to invite users to this channel. Only moderators can invite members."
+        );
+        toast.error(
+          "Permission denied: Only channel moderators can invite members"
+        );
+      } else {
+        setError("Error inviting users, please try again.");
+        toast.error("Failed to invite users");
+      }
     } finally {
       setIsInviting(false);
     }
