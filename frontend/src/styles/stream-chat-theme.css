@@ -962,6 +962,15 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+.btn-secondary:disabled {
+  background: rgba(133, 60, 117, 0.25);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.6;
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 .btn-small {
   padding: 0.5rem 1rem;
   font-size: 0.8rem;

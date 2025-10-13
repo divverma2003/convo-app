@@ -386,7 +386,11 @@ const CreateChannelModal = ({ onClose }) => {
                   disabled={loadingUsers || !hasMore}
                   className="btn btn-secondary w-full mt-2"
                 >
-                  {loadingUsers ? "Loading more..." : "Load More Users"}
+                  {!hasMore
+                    ? "No users left to load"
+                    : loadingUsers
+                    ? "Loading more..."
+                    : "Load More Users"}
                 </button>
               </div>
             </div>
