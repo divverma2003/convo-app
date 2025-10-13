@@ -115,16 +115,17 @@ const HomePage = () => {
                           message={"Error loading channels"}
                         />
                       ) : (
-                        <div className="channels-list">{children}</div>
+                        <>
+                          <div className="channels-list">{children}</div>
+                          <div className="section-header direct-messages">
+                            <div className="section-title">
+                              <UsersIcon className="size-4" />
+                              <span>Direct Messages</span>
+                            </div>
+                          </div>
+                          <UsersList activeChannel={activeChannel} />
+                        </>
                       )}
-
-                      <div className="section-header direct-messages">
-                        <div className="section-title">
-                          <UsersIcon className="size-4" />
-                          <span>Direct Messages</span>
-                        </div>
-                      </div>
-                      <UsersList activeChannel={activeChannel} />
                     </div>
                   )}
                 />
