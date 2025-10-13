@@ -13,7 +13,7 @@ Convo App is a full-stack chat application built with the MERN stack, featuring 
 - **Real-time Chat**: Stream Chat API
 - **Background Jobs**: Inngest
 - **Error Monitoring**: Sentry
-- **Deployment**: Vercel (Backend), Frontend deployment TBD
+- **Deployment**: Vercel (Backend), Frontend (Vercel)
 
 ## Architecture Overview
 
