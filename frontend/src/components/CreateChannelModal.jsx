@@ -226,10 +226,7 @@ const CreateChannelModal = ({ onClose }) => {
         </div>
 
         {/* form */}
-        <form
-          onSubmit={() => handleSubmit()}
-          className="create-channel-modal__form"
-        >
+        <form onSubmit={handleSubmit} className="create-channel-modal__form">
           {error && (
             <div className="form-error">
               <AlertCircleIcon className="w-4 h-4" />
