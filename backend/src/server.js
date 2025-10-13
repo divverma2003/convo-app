@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ENV.CORS_ORIGIN || `http://localhost:5173`,
+    origin: ENV.CLIENT_URL || `http://localhost:5173`,
     credentials: true, // Allow cookies and authentication headers (from Clerk)
   })
 ); // Enable CORS for requests from the frontend
