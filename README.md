@@ -126,15 +126,6 @@ The frontend will run on `http://localhost:5173` and backend on `http://localhos
 - Filter out system users (recording bots)
 - Keyboard search with real-time results
 
-## API Endpoints
-
-```
-GET  /                    # Health check
-POST /api/inngest         # Inngest webhook
-GET  /api/users           # Get all users
-POST /api/users/token     # Generate Stream token
-```
-
 ## Deployment
 
 ### Backend (Vercel)
