@@ -12,10 +12,10 @@ import chatRoutes from "./routes/chat.route.js";
 
 const app = express();
 
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use(express.json()); // for parsing application/json -->CLIENT_URLapp.use(clerkMiddleware()); // req.auth will be available in the request object
 
 // Route handlers
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
 
