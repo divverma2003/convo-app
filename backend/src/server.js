@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
 import * as Sentry from "@sentry/node";
+import cors from "cors";
 
 import { inngest, functions } from "./config/inngest.js";
 import chatRoutes from "./routes/chat.route.js";
