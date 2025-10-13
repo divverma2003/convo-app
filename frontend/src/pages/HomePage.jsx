@@ -40,7 +40,12 @@ const HomePage = () => {
     }
   }, [chatClient, searchParams]);
 
-  if (error) return <ErrorMessageContainer message="Something went wrong!" />;
+  if (error)
+    return (
+      <div className="chat-wrapper">
+        <ErrorMessageContainer message="Something went wrong!" />;
+      </div>
+    );
   if (isLoading || !chatClient) return <PageLoader />;
   return (
     <div className="chat-wrapper">
