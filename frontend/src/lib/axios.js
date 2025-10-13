@@ -9,8 +9,7 @@ import axios from "axios";
     ? "http://localhost:5001/api"
     : "https://convo-app-backend-beta.vercel.app/api";*/
 
-const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   withCredentials: true, // Send cookies and tokens with every request
