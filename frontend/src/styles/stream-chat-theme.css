@@ -279,7 +279,7 @@
 }
 
 .create-channel-modal__close {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(200, 90, 176, 0.08);
   border: 1px solid var(--primary-color, 0.015);
   color: var(--secondary-color, 0.8);
   cursor: pointer;
@@ -293,7 +293,7 @@
 }
 
 .create-channel-modal__close:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(200, 90, 176, 0.15);
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }

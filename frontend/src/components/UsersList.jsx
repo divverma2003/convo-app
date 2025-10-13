@@ -148,7 +148,7 @@ const UsersList = ({ activeChannel }) => {
           console.error("Error counting unread:", error);
         }
 
-        const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "";
+        const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "?";
         return (
           <button
             key={user.id}
@@ -168,7 +168,7 @@ const UsersList = ({ activeChannel }) => {
                     className="w-6.5 h-6.5 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="w-6.5 h-6.5 rounded-full bg-pink-100/70 flex items-center justify-center">
+                  <div className="w-6.5 h-6.5 rounded-full bg-pink-300/70 flex items-center justify-center">
                     <span className="text-sm font-medium text-white">
                       {userInitial}
                     </span>

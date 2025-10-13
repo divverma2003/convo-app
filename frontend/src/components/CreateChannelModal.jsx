@@ -369,7 +369,7 @@ const CreateChannelModal = ({ onClose }) => {
                           {/* Placeholder avatar with initials */}
                           <span>
                             {(user.name || user.id).charAt(0).toUpperCase() ||
-                              ""}
+                              "?"}
                           </span>
                         </div>
                       )}

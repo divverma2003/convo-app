@@ -55,10 +55,13 @@ const InviteModal = ({ channel, onClose }) => {
       <div className="create-channel-modal">
         {/* HEADER */}
         <div className="create-channel-modal-header">
-          <h2>Invite Users</h2>
-          <button onClick={onClose} className="create-channel-modal__close">
+          <button
+            onClick={onClose}
+            className="create-channel-modal__close mt-2.5 ml-2.5"
+          >
             <XIcon className="size-4" />
           </button>
+          <h2 className="mt-2.5 ml-2.5 text-lg font-semibold">Invite Users</h2>
         </div>
 
         {/* CONTENT */}
